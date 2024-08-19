@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
-    public ProductDto mapToProductDto(Product product){
+    public ProductDto mapToProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setTitle(product.getTitle());
@@ -18,12 +18,12 @@ public class ProductMapper {
         return productDto;
     }
 
-    public Product mapToProduct(FakeProductDto fakeProductDto){
+    public Product mapToProduct(FakeProductDto fakeProductDto) {
         Product product = new Product();
         product.setId(fakeProductDto.getId());
         product.setTitle(fakeProductDto.getTitle());
         product.setDescription(fakeProductDto.getDescription());
-        Category cat  = new Category();
+        Category cat = new Category();
         cat.setName(fakeProductDto.getCategory());
         product.setCategory(cat);
         product.setImage(fakeProductDto.getImage());
