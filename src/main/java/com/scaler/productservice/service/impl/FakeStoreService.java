@@ -107,8 +107,12 @@ public class FakeStoreService implements ProductService {
     @Override
     public Product deleteProduct(int id) {
         log.info("Inside FakeProductService --> deleteProduct");
+        if(restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakeProductDto.class) == null) {
+            log.error("No product found for the given product id: "+id);
+            return null;
+        }
         FakeProductDto dto = restTemplate.exchange("https://fakestoreapi.com/products/"+id, HttpMethod.DELETE, null, FakeProductDto.class).getBody();
-        return (dto != null)? productMapper.mapToProduct(dto) : null;
+        return productMapper.mapToProduct(dto);
     }
 
     @Override
