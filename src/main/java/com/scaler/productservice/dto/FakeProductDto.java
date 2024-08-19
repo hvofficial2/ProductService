@@ -1,8 +1,5 @@
 package com.scaler.productservice.dto;
 
-
-import com.scaler.productservice.model.Category;
-import com.scaler.productservice.model.Product;
 import lombok.*;
 
 @NoArgsConstructor

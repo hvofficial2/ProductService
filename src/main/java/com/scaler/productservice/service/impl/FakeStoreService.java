@@ -29,18 +29,18 @@ public class FakeStoreService implements ProductService {
     @Override
     public Product getProductById(int id) {
         log.info("Inside FakeProductService --> getProductById");
-        FakeProductDto fakeProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakeProductDto.class);
-        if(fakeProductDto == null) return null;
+        FakeProductDto fakeProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeProductDto.class);
+        if (fakeProductDto == null) return null;
         return productMapper.mapToProduct(fakeProductDto);
     }
 
     @Override
     public List<Product> getAllProducts() {
         log.info("Inside FakeProductService --> getAllProducts");
-        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products",FakeProductDto[].class);
-        if(dtos == null) return null;
+        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products", FakeProductDto[].class);
+        if (dtos == null) return null;
         List<Product> products = new ArrayList<>();
-        for(FakeProductDto dto : dtos) {
+        for (FakeProductDto dto : dtos) {
             products.add(productMapper.mapToProduct(dto));
         }
         return products;
@@ -49,21 +49,21 @@ public class FakeStoreService implements ProductService {
     @Override
     public List<Product> getLimitedProducts(int limit) {
         log.info("Inside FakeProductService --> getLimitedProducts");
-        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products?limit="+limit,FakeProductDto[].class);
-        if(dtos == null) return null;
+        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products?limit=" + limit, FakeProductDto[].class);
+        if (dtos == null) return null;
         List<Product> products = new ArrayList<>();
-        for(FakeProductDto dto : dtos) {
+        for (FakeProductDto dto : dtos) {
             products.add(productMapper.mapToProduct(dto));
         }
         return products;
     }
 
-    public List<Product> getSortedProducts(String sort){
+    public List<Product> getSortedProducts(String sort) {
         log.info("Inside FakeProductService --> getSortedProducts");
-        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products?sort="+sort,FakeProductDto[].class);
-        if(dtos == null) return null;
+        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products?sort=" + sort, FakeProductDto[].class);
+        if (dtos == null) return null;
         List<Product> products = new ArrayList<>();
-        for(FakeProductDto dto : dtos) {
+        for (FakeProductDto dto : dtos) {
             products.add(productMapper.mapToProduct(dto));
         }
         return products;
@@ -80,18 +80,14 @@ public class FakeStoreService implements ProductService {
         requestDto.setCategory(category);
 
         FakeProductDto responseDto = restTemplate.postForObject("https://fakestoreapi.com/products", requestDto, FakeProductDto.class);
-        if(responseDto == null) return null;
+        if (responseDto == null) return null;
         return productMapper.mapToProduct(responseDto);
     }
 
     @Override
-    public Product updateProduct(int id,String title, double price, String description, String image, String category) {
+    public Product updateProduct(int id, String title, double price, String description, String image, String category) {
         log.info("Inside FakeProductService --> updateProduct");
-        FakeProductDto requestDto = restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakeProductDto.class);
-        if(requestDto == null){
-            log.error("No product found for the given product id: "+id);
-            return null;
-        }
+        FakeProductDto requestDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeProductDto.class);
         requestDto.setTitle(title);
         requestDto.setPrice(price);
         requestDto.setDescription(description);
@@ -100,19 +96,15 @@ public class FakeStoreService implements ProductService {
 
 //        FakeProductDto dto = restTemplate.patchForObject("https://fakestoreapi.com/products/"+id, requestDto, FakeProductDto.class);
 //                restTemplate.patchForObject("https://fakestoreapi.com/products/7", requestDto,FakeProductDto.class);
-        ResponseEntity<FakeProductDto> response = restTemplate.exchange("https://fakestoreapi.com/products/"+id, HttpMethod.PUT, new HttpEntity<>(requestDto), FakeProductDto.class);
-        return (response.getBody() != null)? productMapper.mapToProduct(response.getBody()) : null;
+        ResponseEntity<FakeProductDto> response = restTemplate.exchange("https://fakestoreapi.com/products/" + id, HttpMethod.PUT, new HttpEntity<>(requestDto), FakeProductDto.class);
+        return (response.getBody() != null) ? productMapper.mapToProduct(response.getBody()) : null;
     }
 
     @Override
     public Product deleteProduct(int id) {
         log.info("Inside FakeProductService --> deleteProduct");
-        if(restTemplate.getForObject("https://fakestoreapi.com/products/"+id, FakeProductDto.class) == null) {
-            log.error("No product found for the given product id: "+id);
-            return null;
-        }
-        FakeProductDto dto = restTemplate.exchange("https://fakestoreapi.com/products/"+id, HttpMethod.DELETE, null, FakeProductDto.class).getBody();
-        return productMapper.mapToProduct(dto);
+        FakeProductDto dto = restTemplate.exchange("https://fakestoreapi.com/products/" + id, HttpMethod.DELETE, null, FakeProductDto.class).getBody();
+        return (dto != null) ? productMapper.mapToProduct(dto) : null;
     }
 
     @Override
@@ -124,10 +116,10 @@ public class FakeStoreService implements ProductService {
     @Override
     public List<Product> getProductsByCategory(String category) {
         log.info("Inside FakeProductService --> getProductsByCategory");
-        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products/category/"+category, FakeProductDto[].class);
-        if(dtos == null) return null;
+        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products/category/" + category, FakeProductDto[].class);
+        if (dtos == null) return null;
         List<Product> products = new ArrayList<>();
-        for(FakeProductDto dto : dtos)
+        for (FakeProductDto dto : dtos)
             products.add(productMapper.mapToProduct(dto));
         return products;
     }
