@@ -105,4 +105,9 @@ public class FakeStoreProductService implements ProductService {
         FakeProductDto dto = restTemplate.exchange("https://fakestoreapi.com/products/" + id, HttpMethod.DELETE, null, FakeProductDto.class).getBody();
         return (dto != null) ? productMapper.mapToProduct(dto) : null;
     }
+
+    @Override
+    public List<Product> findAllProductsByCategory_NameEquals(String category) {
+        return List.of();
+    }
 }

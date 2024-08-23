@@ -19,4 +19,5 @@ public interface ProductService {
 
     Product deleteProduct(int id);
 
+    List<Product> findAllProductsByCategory_NameEquals(String category);
 }

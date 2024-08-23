@@ -112,4 +112,10 @@ public class SelfProductService implements ProductService {
         requestDto.setLastUpdatedAt(new Date());
         return productRepo.save(requestDto);
     }
+
+    @Override
+    public List<Product> findAllProductsByCategory_NameEquals(String category) {
+        log.info("Inside SelfProductService --> Find all products by category");
+        return productRepo.findAllProductsByCategory_NameEquals(category);
+    }
 }

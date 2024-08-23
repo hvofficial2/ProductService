@@ -20,4 +20,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     List<Product> findByOrderById();
 
     List<Product> findByOrderByIdDesc();
+
+    List<Product> findAllProductsByCategory_NameEquals(String category);
 }
