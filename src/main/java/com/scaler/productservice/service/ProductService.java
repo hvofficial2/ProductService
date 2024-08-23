@@ -5,21 +5,18 @@ import com.scaler.productservice.model.Product;
 import java.util.List;
 
 public interface ProductService {
-    public Product getProductById(int id);
+    Product getProductById(int id);
 
-    public List<Product> getAllProducts();
+    List<Product> getAllProducts();
 
-    public List<Product> getLimitedProducts(int limit);
+    List<Product> getLimitedProducts(int limit);
 
-    public List<Product> getSortedProducts(String sort);
+    List<Product> getSortedProducts(String sort);
 
-    public Product addProduct(String title, double price, String description, String image, String category);
+    Product addProduct(String title, double price, String description, String image, String category);
 
-    public Product updateProduct(int id, String title, double price, String description, String image, String category);
+    Product updateProduct(int id, String title, double price, String description, String image, String category);
 
-    public Product deleteProduct(int id);
+    Product deleteProduct(int id);
 
-    public String[] getAllCategories();
-
-    public List<Product> getProductsByCategory(String category);
 }

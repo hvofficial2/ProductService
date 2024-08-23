@@ -3,7 +3,7 @@ package com.scaler.productservice.service.impl;
 import com.scaler.productservice.dto.FakeProductDto;
 import com.scaler.productservice.model.Product;
 import com.scaler.productservice.service.ProductService;
-import com.scaler.productservice.util.ProductMapper;
+import com.scaler.productservice.util.Mapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -15,13 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Log4j2
-@Service
-public class FakeStoreService implements ProductService {
+@Service("fakeStoreProductService")
+public class FakeStoreProductService implements ProductService {
 
     private final RestTemplate restTemplate;
-    private final ProductMapper productMapper;
+    private final Mapper productMapper;
 
-    public FakeStoreService(RestTemplate restTemplate, ProductMapper productMapper) {
+    public FakeStoreProductService(RestTemplate restTemplate, Mapper productMapper) {
         this.restTemplate = restTemplate;
         this.productMapper = productMapper;
     }
@@ -30,8 +30,7 @@ public class FakeStoreService implements ProductService {
     public Product getProductById(int id) {
         log.info("Inside FakeProductService --> getProductById");
         FakeProductDto fakeProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeProductDto.class);
-        if (fakeProductDto == null) return null;
-        return productMapper.mapToProduct(fakeProductDto);
+        return (fakeProductDto == null)? null : productMapper.mapToProduct(fakeProductDto);
     }
 
     @Override
@@ -105,22 +104,5 @@ public class FakeStoreService implements ProductService {
         log.info("Inside FakeProductService --> deleteProduct");
         FakeProductDto dto = restTemplate.exchange("https://fakestoreapi.com/products/" + id, HttpMethod.DELETE, null, FakeProductDto.class).getBody();
         return (dto != null) ? productMapper.mapToProduct(dto) : null;
-    }
-
-    @Override
-    public String[] getAllCategories() {
-        log.info("Inside FakeProductService --> getAllCategories");
-        return restTemplate.getForObject("https://fakestoreapi.com/products/categories", String[].class);
-    }
-
-    @Override
-    public List<Product> getProductsByCategory(String category) {
-        log.info("Inside FakeProductService --> getProductsByCategory");
-        FakeProductDto[] dtos = restTemplate.getForObject("https://fakestoreapi.com/products/category/" + category, FakeProductDto[].class);
-        if (dtos == null) return null;
-        List<Product> products = new ArrayList<>();
-        for (FakeProductDto dto : dtos)
-            products.add(productMapper.mapToProduct(dto));
-        return products;
     }
 }

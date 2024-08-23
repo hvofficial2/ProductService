@@ -66,11 +66,19 @@ public class ControllerAdvice {
         return new ResponseEntity<>(errorDto, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidCategoryNameException.class)
+    public ResponseEntity<ErrorDto> handleInvalidCategoryNameException(InvalidCategoryNameException e) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage(e.getMessage());
+        errorDto.setCode("008");
+        return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorDto> handleException(Exception e) {
         ErrorDto errorDto = new ErrorDto();
         errorDto.setMessage(e.getMessage());
-        errorDto.setCode("008");
+        errorDto.setCode("1001");
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
