@@ -1,5 +1,6 @@
 package com.scaler.productservice.util;
 
+import com.scaler.productservice.dto.CategoryDto;
 import com.scaler.productservice.dto.FakeProductDto;
 import com.scaler.productservice.dto.ProductDto;
 import com.scaler.productservice.model.Category;
@@ -7,13 +8,16 @@ import com.scaler.productservice.model.Product;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductMapper {
+public class Mapper {
     public ProductDto mapToProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
         productDto.setTitle(product.getTitle());
         productDto.setDescription(product.getDescription());
-        productDto.setCategory(product.getCategory());
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setId(product.getCategory().getId());
+        categoryDto.setName(product.getCategory().getName());
+        productDto.setCategoryDto(categoryDto);
         productDto.setImage(product.getImage());
         return productDto;
     }
@@ -28,5 +32,12 @@ public class ProductMapper {
         product.setCategory(cat);
         product.setImage(fakeProductDto.getImage());
         return product;
+    }
+
+    public CategoryDto mapToCategoryDto(Category category) {
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        return categoryDto;
     }
 }
