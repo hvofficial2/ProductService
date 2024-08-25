@@ -1,6 +1,7 @@
 package com.scaler.productservice.service;
 
 import com.scaler.productservice.model.Product;
+import com.scaler.productservice.repository.projections.ProductProjection;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface ProductService {
     Product deleteProduct(int id);
 
     List<Product> findAllProductsByCategory_NameEquals(String category);
+
+    List<ProductProjection> getAllProductsPrice();
 }

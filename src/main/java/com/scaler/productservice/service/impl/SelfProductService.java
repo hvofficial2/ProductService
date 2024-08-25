@@ -5,6 +5,7 @@ import com.scaler.productservice.model.Category;
 import com.scaler.productservice.model.Product;
 import com.scaler.productservice.repository.CategoryRepo;
 import com.scaler.productservice.repository.ProductRepo;
+import com.scaler.productservice.repository.projections.ProductProjection;
 import com.scaler.productservice.service.CategoryService;
 import com.scaler.productservice.service.ProductService;
 import lombok.extern.log4j.Log4j2;
@@ -117,5 +118,11 @@ public class SelfProductService implements ProductService {
     public List<Product> findAllProductsByCategory_NameEquals(String category) {
         log.info("Inside SelfProductService --> Find all products by category");
         return productRepo.findAllProductsByCategory_NameEquals(category);
+    }
+
+    @Override
+    public List<ProductProjection> getAllProductsPrice() {
+        log.info("Inside SelfProductService --> Get all products price");
+        return productRepo.findAllProductPrice();
     }
 }

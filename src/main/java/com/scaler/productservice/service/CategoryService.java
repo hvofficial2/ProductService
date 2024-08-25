@@ -2,6 +2,7 @@ package com.scaler.productservice.service;
 
 import com.scaler.productservice.model.Category;
 import com.scaler.productservice.model.Product;
+import com.scaler.productservice.repository.projections.CategoryProjection;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface CategoryService {
     Category deleteCategory(String name);
 
     Category updateCategoryName(String oldName,String newName);
+
+    List<CategoryProjection> getCategoryProjections();
 }

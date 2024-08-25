@@ -4,6 +4,7 @@ import com.scaler.productservice.exception.InvalidCategoryNameException;
 import com.scaler.productservice.model.Category;
 import com.scaler.productservice.model.Product;
 import com.scaler.productservice.repository.CategoryRepo;
+import com.scaler.productservice.repository.projections.CategoryProjection;
 import com.scaler.productservice.service.CategoryService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -84,5 +85,11 @@ public class SelfCategoryService implements CategoryService {
         category.setLastUpdatedAt(new Date());
         categoryRepo.save(category);
         return category;
+    }
+
+    @Override
+    public List<CategoryProjection> getCategoryProjections() {
+        log.info("Inside SelfProductService --> getCategoryProjections");
+        return categoryRepo.findAllCategoryWithCountOfProducts();
     }
 }

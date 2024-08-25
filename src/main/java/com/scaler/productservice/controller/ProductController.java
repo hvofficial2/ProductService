@@ -6,6 +6,8 @@ import com.scaler.productservice.dto.ProductDto;
 import com.scaler.productservice.exception.*;
 import com.scaler.productservice.model.Category;
 import com.scaler.productservice.model.Product;
+import com.scaler.productservice.repository.projections.CategoryProjection;
+import com.scaler.productservice.repository.projections.ProductProjection;
 import com.scaler.productservice.service.CategoryService;
 import com.scaler.productservice.service.ProductService;
 import com.scaler.productservice.util.Mapper;
@@ -257,5 +259,17 @@ public class ProductController {
             throw new InvalidCategoryNameException("Category does not exist or deleted!!");
         }
         return "Category DELETED!!!";
+    }
+
+    @GetMapping("/products/price")
+    public List<ProductProjection> getProductProjections() {
+        log.info("Inside getProductProjections method");
+        return productService.getAllProductsPrice();
+    }
+
+    @GetMapping("/categories/count")
+    public List<CategoryProjection> getCategoryProjections() {
+        log.info("Inside getCategoryProjections method");
+        return categoryService.getCategoryProjections();
     }
 }
