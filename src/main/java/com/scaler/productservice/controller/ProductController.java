@@ -6,6 +6,8 @@ import com.scaler.productservice.dto.ProductDto;
 import com.scaler.productservice.exception.*;
 import com.scaler.productservice.model.Category;
 import com.scaler.productservice.model.Product;
+import com.scaler.productservice.repository.projections.CategoryProjection;
+import com.scaler.productservice.repository.projections.ProductProjection;
 import com.scaler.productservice.service.CategoryService;
 import com.scaler.productservice.service.ProductService;
 import com.scaler.productservice.util.Mapper;
@@ -198,6 +200,20 @@ public class ProductController {
         return productDtos;
     }
 
+    @GetMapping("/products/category2/{cat}")
+    public List<ProductDto> getProductsInCategory2(@PathVariable("cat") String category) {
+        log.info("Inside getProductsInCategory2 method");
+        List<Product> products = productService.findAllProductsByCategory_NameEquals(category);
+        if (products == null || products.isEmpty()) {
+            log.error("No Products found in the given category : " + category);
+            throw new ProductNotFoundException("No Products found in the given category : " + category);
+        }
+        List<ProductDto> productDtos = new ArrayList<>();
+        for (Product product : products)
+            productDtos.add(mapper.mapToProductDto(product));
+        return productDtos;
+    }
+
     @PostMapping("/category")
     public CategoryDto addCategory(@RequestParam("name") String name) {
         log.info("Inside addCategory method");
@@ -243,5 +259,17 @@ public class ProductController {
             throw new InvalidCategoryNameException("Category does not exist or deleted!!");
         }
         return "Category DELETED!!!";
+    }
+
+    @GetMapping("/products/price")
+    public List<ProductProjection> getProductProjections() {
+        log.info("Inside getProductProjections method");
+        return productService.getAllProductsPrice();
+    }
+
+    @GetMapping("/categories/count")
+    public List<CategoryProjection> getCategoryProjections() {
+        log.info("Inside getCategoryProjections method");
+        return categoryService.getCategoryProjections();
     }
 }

@@ -2,6 +2,7 @@ package com.scaler.productservice.service.impl;
 
 import com.scaler.productservice.dto.FakeProductDto;
 import com.scaler.productservice.model.Product;
+import com.scaler.productservice.repository.projections.ProductProjection;
 import com.scaler.productservice.service.ProductService;
 import com.scaler.productservice.util.Mapper;
 import lombok.extern.log4j.Log4j2;
@@ -104,5 +105,15 @@ public class FakeStoreProductService implements ProductService {
         log.info("Inside FakeProductService --> deleteProduct");
         FakeProductDto dto = restTemplate.exchange("https://fakestoreapi.com/products/" + id, HttpMethod.DELETE, null, FakeProductDto.class).getBody();
         return (dto != null) ? productMapper.mapToProduct(dto) : null;
+    }
+
+    @Override
+    public List<Product> findAllProductsByCategory_NameEquals(String category) {
+        return List.of();
+    }
+
+    @Override
+    public List<ProductProjection> getAllProductsPrice() {
+        return List.of();
     }
 }

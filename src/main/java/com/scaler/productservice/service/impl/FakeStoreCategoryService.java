@@ -3,6 +3,7 @@ package com.scaler.productservice.service.impl;
 import com.scaler.productservice.dto.FakeProductDto;
 import com.scaler.productservice.model.Category;
 import com.scaler.productservice.model.Product;
+import com.scaler.productservice.repository.projections.CategoryProjection;
 import com.scaler.productservice.service.CategoryService;
 import com.scaler.productservice.util.Mapper;
 import lombok.extern.log4j.Log4j2;
@@ -64,5 +65,10 @@ public class FakeStoreCategoryService implements CategoryService {
     @Override
     public Category updateCategoryName(String oldName,String newName) {
         return null;
+    }
+
+    @Override
+    public List<CategoryProjection> getCategoryProjections() {
+        return List.of();
     }
 }
