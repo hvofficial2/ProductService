@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 @Entity
 public class Category extends BaseModel implements Serializable {
     @Id
@@ -21,6 +21,9 @@ public class Category extends BaseModel implements Serializable {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category",cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "category"
+            ,cascade = {CascadeType.REMOVE}
+//            ,fetch = FetchType.EAGER
+            )
     private List<Product> products;
 }
